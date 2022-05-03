@@ -1,7 +1,10 @@
 package com.cenfotec.GrilloFeliz.controllers;
 
 import com.cenfotec.GrilloFeliz.entities.Hijo;
+import com.cenfotec.GrilloFeliz.entities.Libro;
+import com.cenfotec.GrilloFeliz.entities.Padre;
 import com.cenfotec.GrilloFeliz.services.HijoService;
+import com.cenfotec.GrilloFeliz.services.LibroService;
 import com.cenfotec.GrilloFeliz.services.PadreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,7 @@ public class HijoController {
 
     @Autowired HijoService hijoService;
     @Autowired PadreService padreService;
+    @Autowired LibroService libroService;
 
     public Model agregarOpciones(Model model){
         List options = new ArrayList<String>();
@@ -30,6 +34,9 @@ public class HijoController {
 
         List padres = padreService.getAll();
         model.addAttribute("padres", padres);
+
+        List libros = libroService.getAllLibros(100);
+        model.addAttribute("libros", libros);
 
         return model;
     }
@@ -48,10 +55,10 @@ public class HijoController {
         return "exito";
     }
 
-    @RequestMapping("/listarHijos")
+    @RequestMapping("/listarConteo")
     public String listarHijos(Model model){
         model.addAttribute("hijos", hijoService.getAll());
-        return "listarHijos";
+        return "listarConteo";
     }
 
     @RequestMapping(value = "/editarHijo/{id}")
@@ -71,9 +78,50 @@ public class HijoController {
         Optional<Hijo> hijoToEdit = hijoService.getById(id);
         if (hijoToEdit.isPresent()){
             hijo.setPadre(hijoToEdit.get().getPadre());
+            hijo.setLibros(hijoToEdit.get().getLibros());
             hijoService.update(hijo);
             return "exito";
         } else {
+            return "notFound";
+        }
+    }
+
+    @RequestMapping(value = "/adjudicarLibroLeido/{id}")
+    public String navAdjudicarLectura(Model model,@PathVariable int id){
+        model = agregarOpciones(model);
+        Optional<Hijo> hijoToEdit = hijoService.getById(id);
+        if (hijoToEdit.isPresent()) {
+            model.addAttribute("hijo", hijoToEdit);
+            return "adjudicarLibroLeido";
+        }else{
+            return "notFound";
+        }
+    }
+
+    @RequestMapping(value = "/adjudicarLibroLeido/{id}", method = RequestMethod.POST)
+    public String guardarLectura(Hijo hijo, BindingResult result,Model model, @PathVariable int id) {
+        Optional<Hijo> hijoToEdit = hijoService.getById(id);
+        if (hijoToEdit.isPresent()){
+            hijo.setPadre(hijoToEdit.get().getPadre());
+            Libro temp = hijo.getLibros().get(0);
+            hijo.setLibros(hijoToEdit.get().getLibros());
+            hijo.addLibro(temp);
+            hijoService.update(hijo);
+            return "exito";
+        } else {
+            return "notFound";
+        }
+    }
+
+    @RequestMapping(value = "/listarLecturas/{id}")
+    public String navListarLecturas(Model model, @PathVariable int id){
+        Optional<Hijo> hijoToEdit = hijoService.getById(id);
+        if (hijoToEdit.isPresent()) {
+            List<Hijo> hijos = new ArrayList<>();
+            hijos.add(hijoToEdit.get());
+            model.addAttribute("hijos", hijos);
+            return "listarLecturas";
+        }else{
             return "notFound";
         }
     }

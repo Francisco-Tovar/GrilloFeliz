@@ -25,4 +25,8 @@ public class Libro implements Serializable {
     @Column(name = "autor")
     private String autor;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "LIBRO_ID",referencedColumnName = "ID")
+    private Hijo hijo;
+
 }

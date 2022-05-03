@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <link rel="stylesheet" href="styles/style.css"/>
+    <title>Grillito-Feliz.Inc</title>
+</head>
+<body>
+<div>
+    <h1>Listado de lecturas</h1>
+    <a href="/"> Volver al inicio </a>
+    <ul>
+        <div th:each="entry,status : ${hijos}">
+            <li>
+                <div>
+                    <div>
+                        <h2> <span th:text="${entry.nombre}+' libros leidos: ' + ${entry.getLibrosCount()}" > </span></h2>
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
+</body>
+</html>

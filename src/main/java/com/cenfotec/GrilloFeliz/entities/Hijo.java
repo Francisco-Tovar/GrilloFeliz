@@ -1,6 +1,7 @@
 package com.cenfotec.GrilloFeliz.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Hijo {
@@ -14,6 +15,10 @@ public class Hijo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "HIJO_ID", referencedColumnName = "ID")
     private Padre padre;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "LIBRO_ID", referencedColumnName = "ID")
+    private List<Libro> libros;
 
 
     public Hijo() {
@@ -65,5 +70,21 @@ public class Hijo {
 
     public void setPadre(Padre padre) {
         this.padre = padre;
+    }
+
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libro> libros) {
+        this.libros = libros;
+    }
+    public void addLibro(Libro libro){
+
+        this.libros.add(libro);
+    }
+
+    public int getLibrosCount(){
+        return this.libros.size();
     }
 }

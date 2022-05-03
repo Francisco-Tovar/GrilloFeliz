@@ -21,8 +21,7 @@ public class Padre {
     @JoinColumn(name = "HIJO_ID", referencedColumnName = "ID")
     private List<Hijo> hijos;
 
-    public Padre() {
-    }
+    public Padre() {    }
 
     public Padre(Long id, String nombre, int cedula, String direccion, int telefono, int celular) {
         this.id = id;

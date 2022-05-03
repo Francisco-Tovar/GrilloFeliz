@@ -1,4 +1,5 @@
 package com.cenfotec.GrilloFeliz.controllers;
+import com.cenfotec.GrilloFeliz.entities.Hijo;
 import com.cenfotec.GrilloFeliz.entities.Padre;
 import com.cenfotec.GrilloFeliz.services.PadreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class PadreController {
         Optional<Padre> padreToEdit = padreService.getById(id);
         if (padreToEdit.isPresent()) {
             List<Padre> padres = new ArrayList<>();
-            padres.add(padreToEdit.get());
+            padres.add(0,padreToEdit.get());
             model.addAttribute("padres", padres);
             return "listarHijos";
         }else{

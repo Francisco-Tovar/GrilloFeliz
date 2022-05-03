@@ -29,7 +29,9 @@
                             <p><span th:text=" 'Nombre: '+ ${lista.nombre}  "></span></p>
                             <p><span th:text=" 'Matricula: '+ ${lista.matricula}"></span></p>
                             <p><span th:text=" 'Alergias: '+ ${lista.alergias}"></span></p>
-                            <p> - <a th:href="@{/editarHijo/{id}(id=${lista.id})}">Editar hijo</a> - </p>
+                            <p> - <a th:href="@{/editarHijo/{id}(id=${lista.id})}">Editar hijo</a> -
+                                <a th:href="@{/adjudicarLibroLeido/{id}(id=${lista.id})}">Agregar lectura</a> -
+                                <a th:href="@{/listarLecturas/{id}(id=${lista.id})}">Listar lecturas</a> -</p>
                         </div>
                     </div>
                 </div>

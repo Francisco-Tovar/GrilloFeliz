@@ -1,6 +1,7 @@
 package com.cenfotec.GrilloFeliz.services;
 
 import com.cenfotec.GrilloFeliz.entities.Libro;
+import com.cenfotec.GrilloFeliz.entities.Padre;
 import com.cenfotec.GrilloFeliz.repositories.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,15 @@ public class LibroService {
         return this.libroRepository.save(libro);
     }
 
+    public void update (Libro libro){
+        libroRepository.save(libro);
+    }
+
     public Libro crear(Libro libro){
         return this.libroRepository.save(libro);
     }
 
+    public void delete (int id){
+        libroRepository.deleteById(id);
+    }
 }
