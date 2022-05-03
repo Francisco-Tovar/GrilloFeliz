@@ -26,8 +26,8 @@ public class PadreService {
         return padreRepository.findById(Long.valueOf(id));
     }
 
-    public Optional<Padre> getByNombre (String nombre){
-        return padreRepository.findFirstByNombreContains(nombre);
+    public List<Padre> getByNombre (String nombre){
+        return padreRepository.findPadresByNombreContains(nombre);
     }
 
     public void update (Padre padre){

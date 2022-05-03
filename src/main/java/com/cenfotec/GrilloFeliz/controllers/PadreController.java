@@ -1,30 +1,31 @@
 package com.cenfotec.GrilloFeliz.controllers;
 import com.cenfotec.GrilloFeliz.entities.Padre;
 import com.cenfotec.GrilloFeliz.services.PadreService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
+
+import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class PadreController {
 
     @Autowired PadreService padreService;
 
     @RequestMapping(value = "/registrarPadre", method = RequestMethod.GET)
-    public String navRegistroPadre(Model model){
+    public String navegarRegistroPadre(Model model){
         model.addAttribute(new Padre());
         return "registrarPadre";
     }
 
     @RequestMapping(value = "/registrarPadre", method = RequestMethod.POST)
-    public String accRegistroPadre(Padre padre, BindingResult result, Model model){
+    public String accionRegistroPadre(Padre padre, BindingResult result, Model model){
         padreService.save(padre);
         return "exito";
     }
@@ -44,8 +45,35 @@ public class PadreController {
         }else{
             return "notFound";
         }
+    }
 
+    @RequestMapping(value = "/editarPadre/{id}", method = RequestMethod.POST)
+    public String guardarCambios(Padre padre, BindingResult result,Model model, @PathVariable int id) {
+        Optional<Padre> padreToEdit = padreService.getById(id);
+        if (padreToEdit.isPresent()){
+            padre.setHijos(padreToEdit.get().getHijos());
+            padreService.update(padre);
+            return "exito";
+        } else {
+            return "notFound";
+        }
+    }
+
+    @RequestMapping(path = {"/buscar"})
+    public String buscarPadres(Padre padre, Model model, String keyword) {
+        if(keyword!=null) {
+            List<Padre> list = padreService.getByNombre(keyword);
+            if (!list.isEmpty()){
+                model.addAttribute("padres", list);
+            }else{
+                model.addAttribute("padres", padreService.getAll());
+            }
+            return "buscarPadres";
+        }else {
+            List<Padre> list = padreService.getAll();
+            model.addAttribute("padres", list);}
+        return "buscarPadres";
     }
 
 
-}
+}//end

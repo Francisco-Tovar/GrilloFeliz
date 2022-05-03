@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"></meta>
+    <meta http-equiv="Content-Type" content="text/html"></meta>
+    <link rel="stylesheet" href="styles/style.css"/>
+    <title>Grillito-Feliz.Inc</title>
+</head>
+<body>
+<div>
+    <h1>Listado de padres</h1>
+    <a href="/"> Volver al inicio </a>
+    <ul>
+        <div th:each="entry,status : ${padres}">
+            <li>
+                <div>
+                    <div>
+                        <h3 th:text=" ' padre numero: ' + ${entry.id}"> </h3>
+                        <h2><span th:text="${entry.nombre}" ></span></h2>
+
+                    </div>
+                    <div class="tl-body">
+                        <p><span th:text=" 'Cedula juridica: '+ ${entry.cedula}"> </span></p>
+                        <p><span th:text=" 'Direccion: '+ ${entry.direccion}"></span></p>
+                        <p><span th:text=" 'Telefono: '+ ${entry.telefono}"></span></p>
+                        <p><span th:text=" 'Celular: '+ ${entry.celular}"></span></p>
+                        <p> - <a th:href="@{/editarPadre/{id}(id=${entry.id})}">Editar</a> --
+                            <a th:href="@{/registrarHijo/{id}(id=${entry.id})}">Agregar hijo</a> - </p>
+                        <!--<div th:each="lista,status : ${entry.contactos}">
+                            <h4>Contacto</h4>
+                            <p><span th:text=" 'Nombre: '+ ${lista.nombre} + ' ' +${lista.apellido1}+ ' ' +${lista.apellido2} "></span></p>
+                            <p><span th:text=" 'Telefono: '+ ${entry.telefono}"></span></p>
+                            <p><span th:text=" 'E-mail: '+ ${lista.email}"></span></p>
+                            <p> - <a th:href="@{/editarContacto/{id}(id=${lista.id})}">Editar</a> &#45;&#45;
+                                <a th:href="@{/borrarContacto/{id}(id=${lista.id})}">Borrar</a> - </p>
+                        </div>-->
+                    </div>
+                </div>
+            </li>
+        </div>
+    </ul>
+</div>
+</body>
+</html>
