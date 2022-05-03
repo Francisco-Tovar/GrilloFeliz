@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,12 +60,33 @@ public class PadreController {
         }
     }
 
-    @RequestMapping(path = {"/buscar"})
-    public String buscarPadres(Padre padre, Model model, String keyword) {
+    @RequestMapping(value = "/listarHijos/{id}")
+    public String navListarHijos(Model model, @PathVariable int id){
+        Optional<Padre> padreToEdit = padreService.getById(id);
+        if (padreToEdit.isPresent()) {
+            List<Padre> padres = new ArrayList<>();
+            padres.add(padreToEdit.get());
+            model.addAttribute("padres", padres);
+            return "listarHijos";
+        }else{
+            return "notFound";
+        }
+    }
+
+    @RequestMapping("/buscarPadres")
+    public String navbuscarPadres(Model model){
+        model.addAttribute("padres", padreService.getAll());
+        return "buscarPadres";
+    }
+
+    @RequestMapping(path = {"/buscarPadres"}, method = RequestMethod.GET)
+    public String accBuscarPadres(Padre padre, Model model, String keyword) {
         if(keyword!=null) {
-            List<Padre> list = padreService.getByNombre(keyword);
-            if (!list.isEmpty()){
-                model.addAttribute("padres", list);
+            Optional<Padre> list = padreService.getByNombre(keyword);
+            if (list.isPresent()){
+                List<Padre> lista = new ArrayList<>();
+                lista.add(list.get());
+                model.addAttribute("padres", lista);
             }else{
                 model.addAttribute("padres", padreService.getAll());
             }

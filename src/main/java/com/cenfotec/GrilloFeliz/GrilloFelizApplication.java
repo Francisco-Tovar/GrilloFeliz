@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GrilloFelizApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(GrilloFelizApplication.class, args);
 	}
 

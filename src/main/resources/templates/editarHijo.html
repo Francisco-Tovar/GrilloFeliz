@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8"></meta>
     <meta http-equiv="Content-Type" content="text/html"></meta>
+    <link rel="stylesheet" href="styles/style.css"/>
     <title>Grillito-Feliz.Inc</title>
 </head>
 <body>
 <div>
-    <h1>Registro de estudiante</h1>
-
+    <h1>Edicion de estudiante</h1>
     <p>------------- <a href="/">Cancelar</a> -------------</p>
-    <form action="#" th:action="@{/registrarHijo/{id}(id=${id})}" th:object="${hijo}" method="post">
+    <form action="#" th:action="@{/editarHijo/{id}(id=${id})}" th:object="${hijo}" method="post">
         <div style="display: flex; flex-direction: column; max-width: 50%">
             <label for="nombre">Nombre</label>
             <input type="text" th:field="*{nombre}" id="nombre"/>
@@ -21,15 +21,10 @@
                         th:text="${matricula}" ></option>
             </select>
 
-            <label for="padre">Padre</label>
-            <select th:field="*{padre}" class="form-control" id="padre">
-                <option th:each="padre : ${padres}" th:value="${padre.id}" th:text="${padre.nombre}" ></option>
-            </select>
-
             <label for="alergias">Alergias</label>
             <input type="text" th:field="*{alergias}" id="alergias"/>
 
-            <input type="submit" value="Registrar" >
+            <input type="submit" value="Guardar cambios" >
         </div>
 
     </form>

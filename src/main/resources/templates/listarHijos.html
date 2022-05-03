@@ -8,14 +8,8 @@
 </head>
 <body>
 <div>
-    <h1>Listado de padres</h1>
+    <h1>Listado de hijos</h1>
     <a href="/"> Volver al inicio </a>
-
-    <form th:action="@{/buscarPadres}" method="get">
-        <input type="text" name="keyword" th:value="${keyword}"  placeholder="buscar padre por nombre.." size="50" >
-        <input type="submit" value="Buscar" >
-    </form>
-
     <ul>
         <div th:each="entry,status : ${padres}">
             <li>
@@ -26,11 +20,17 @@
 
                     </div>
                     <div class="tl-body">
-                        <p><span th:text=" 'Cedula juridica: '+ ${entry.cedula}"> </span></p>
+                        <p><span th:text=" 'Cedula: '+ ${entry.cedula}"> </span></p>
                         <p><span th:text=" 'Direccion: '+ ${entry.direccion}"></span></p>
                         <p><span th:text=" 'Telefono: '+ ${entry.telefono}"></span></p>
                         <p><span th:text=" 'Celular: '+ ${entry.celular}"></span></p>
-                        <p> - <a th:href="@{/editarPadre/{id}(id=${entry.id})}">Editar</a> - </p>
+                        <div th:each="lista,status : ${entry.hijos}">
+                            <h4>Hijo</h4>
+                            <p><span th:text=" 'Nombre: '+ ${lista.nombre}  "></span></p>
+                            <p><span th:text=" 'Matricula: '+ ${lista.matricula}"></span></p>
+                            <p><span th:text=" 'Alergias: '+ ${lista.alergias}"></span></p>
+                            <p> - <a th:href="@{/editarHijo/{id}(id=${lista.id})}">Editar hijo</a> - </p>
+                        </div>
                     </div>
                 </div>
             </li>

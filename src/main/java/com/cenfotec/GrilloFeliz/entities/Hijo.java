@@ -1,7 +1,5 @@
 package com.cenfotec.GrilloFeliz.entities;
 
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
-
 import javax.persistence.*;
 
 @Entity
@@ -10,7 +8,7 @@ public class Hijo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
-    private int matricula;
+    private String matricula;
     private String alergias;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -21,11 +19,12 @@ public class Hijo {
     public Hijo() {
     }
 
-    public Hijo(Long id, String nombre, int matricula, String alergias) {
+    public Hijo(Long id, String nombre, String matricula, String alergias, Padre padre) {
         this.id = id;
         this.nombre = nombre;
         this.matricula = matricula;
         this.alergias = alergias;
+        this.padre = padre;
     }
 
     public Long getId() {
@@ -44,11 +43,11 @@ public class Hijo {
         this.nombre = nombre;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
     }
 

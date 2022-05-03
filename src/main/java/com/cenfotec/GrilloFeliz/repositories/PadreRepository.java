@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface PadreRepository extends JpaRepository <Padre, Long> {
 
-    List<Padre> findPadresByNombreContains(String nombre);
+    Optional<Padre> findPadresByNombreContaining(String nombre);
 }
