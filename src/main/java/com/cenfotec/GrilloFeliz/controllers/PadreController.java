@@ -74,11 +74,11 @@ public class PadreController {
         }
     }
 
-    @RequestMapping("/buscarPadres")
+/*    @RequestMapping("/buscarPadres")
     public String navbuscarPadres(Model model){
         model.addAttribute("padres", padreService.getAll());
         return "buscarPadres";
-    }
+    }*/
 
     @RequestMapping(path = {"/buscarPadres"}, method = RequestMethod.GET)
     public String accBuscarPadres(Padre padre, Model model, String keyword) {
